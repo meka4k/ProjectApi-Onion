@@ -1,25 +1,56 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ProjectApi.Application.Interfaces.UnitOfWorks;
+using ProjectApi.Application.Features.Products.Command.CreateProduct;
+using ProjectApi.Application.Features.Products.Queries.GetAllProducts;
 using ProjectApi.Domain.Entities;
 
 namespace ProjectApi.Api.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/[controller]/[action]")]
 	[ApiController]
 	public class ProductsController : ControllerBase
 	{
-		private readonly IUnitOfWork unitOfWork;
+		private readonly IMediator mediator;
 
-		public ProductsController(IUnitOfWork unitOfWork)
+		public ProductsController(IMediator mediator)
 		{
-			this.unitOfWork = unitOfWork;
+			this.mediator = mediator;
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Get()
+		public async Task<IActionResult> GetAllProducts()
 		{
-			return Ok(await unitOfWork.GetReadRepository<Product>().GetAllAsync());
+			var response = await mediator.Send(new GetAllProductsQueryRequest());
+
+			return Ok(response);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> CreateProduct(CreateProductCommandRequest request)
+		{
+			await mediator.Send(request);
+
+			return Ok();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> UpdateProduct(CreateProductCommandRequest request)
+		{
+			await mediator.Send(request);
+
+			return Ok();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> DeleteProduct(CreateProductCommandRequest request)
+		{
+			await mediator.Send(request);
+
+			return Ok();
 		}
 	}
+
+	
 }
+

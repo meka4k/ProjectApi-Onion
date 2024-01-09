@@ -13,5 +13,6 @@ namespace ProjectApi.Application.Interfaces.Repositories
 		Task AddRangeAsync(IEnumerable<T> entities);
 		Task<T> UpdateAsync(T entity);
 		Task HardDelete(T entity);	
+		Task HardRangeDelete(IList<T> entity);	
 	}
 }

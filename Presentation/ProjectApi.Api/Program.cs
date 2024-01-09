@@ -1,4 +1,6 @@
 using ProjectApi.Persistence;
+using ProjectApi.Application;
+using ProjectApi.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,8 @@ builder.Configuration.SetBasePath(env.ContentRootPath)
 	.AddJsonFile($"appsettings.{env.EnvironmentName}.json",true);
 
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddApplication();
+builder.Services.AddCustomMapper();
 
 var app = builder.Build();
 

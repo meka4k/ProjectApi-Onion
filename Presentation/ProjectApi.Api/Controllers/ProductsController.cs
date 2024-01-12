@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectApi.Application.Features.Products.Command.CreateProduct;
+using ProjectApi.Application.Features.Products.Command.DeleteCommand;
+using ProjectApi.Application.Features.Products.Command.UpdateProduct;
 using ProjectApi.Application.Features.Products.Queries.GetAllProducts;
 using ProjectApi.Domain.Entities;
 
@@ -35,7 +37,7 @@ namespace ProjectApi.Api.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> UpdateProduct(CreateProductCommandRequest request)
+		public async Task<IActionResult> UpdateProduct(UpdateProductCommandRequest request)
 		{
 			await mediator.Send(request);
 
@@ -43,7 +45,7 @@ namespace ProjectApi.Api.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> DeleteProduct(CreateProductCommandRequest request)
+		public async Task<IActionResult> DeleteProduct(DeleteProductCommandRequest request)
 		{
 			await mediator.Send(request);
 

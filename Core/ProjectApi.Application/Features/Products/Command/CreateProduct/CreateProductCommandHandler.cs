@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectApi.Application.Features.Products.Command.CreateProduct
 {
-	public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest>
+	public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest,Unit>
 	{
 		private readonly IUnitOfWork unitOfWork;
 
@@ -18,7 +18,7 @@ namespace ProjectApi.Application.Features.Products.Command.CreateProduct
 			this.unitOfWork = unitOfWork;
 		}
 
-        public async Task Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
 		{
 			Product product = new(request.Title, request.Description, request.BrandId, request.Price, request.Discount);
 			await unitOfWork.GetWriteRepository<Product>().AddAsync(product);
@@ -34,7 +34,10 @@ namespace ProjectApi.Application.Features.Products.Command.CreateProduct
 						CategoryId = categoryId
 					});
 				await unitOfWork.SaveAsync();
+
+				
 			}
+			return Unit.Value;
 		}
 	}
 }

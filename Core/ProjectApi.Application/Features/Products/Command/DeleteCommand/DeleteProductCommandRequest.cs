@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectApi.Application.Features.Products.Command.DeleteCommand
 {
-	public class DeleteProductCommandRequest:IRequest
+	public class DeleteProductCommandRequest:IRequest<Unit>
 	{
         public int Id { get; set; }
     }

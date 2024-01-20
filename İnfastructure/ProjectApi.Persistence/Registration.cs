@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectApi.Application.Interfaces.Repositories;
 using ProjectApi.Application.Interfaces.UnitOfWorks;
+using ProjectApi.Domain.Entities;
 using ProjectApi.Persistence.Context;
 using ProjectApi.Persistence.Repositories;
 using ProjectApi.Persistence.UnitOfWorks;
@@ -23,6 +24,18 @@ namespace ProjectApi.Persistence
 			services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
 
 			services.AddScoped<IUnitOfWork,UnitOfWork>();
+
+			services.AddIdentityCore<User>(opt =>
+			{
+				opt.Password.RequireNonAlphanumeric = false;
+				opt.Password.RequiredLength = 2;
+				opt.Password.RequireLowercase = false;
+				opt.Password.RequireUppercase = false;
+				opt.Password.RequireDigit = false;
+				opt.SignIn.RequireConfirmedEmail = false;
+			})
+				.AddRoles<Role>()
+				.AddEntityFrameworkStores<AppDbContext>();
 		}
 	}
 }
